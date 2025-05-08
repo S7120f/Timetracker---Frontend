@@ -1,4 +1,6 @@
 export interface User {
+    data: any;
+    status: number;
     id: number;
     username: string;
     password: string;

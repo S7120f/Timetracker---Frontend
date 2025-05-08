@@ -9,7 +9,7 @@ async function login(loginRequest: LoginRequest): Promise<User> {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(loginRequest),
-        // credentials: 'include'
+        credentials: 'include'
     });
 
     if (!response.ok) {

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import login from '../services/authService'
+import { useNavigate } from "react-router-dom";
 
 function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     //Den här funktionen körs när man klickar på kanppen
     const handleLogin = (e: React.FormEvent) => {
@@ -14,12 +16,16 @@ function Login() {
         login({ username, password })
             .then(user => {
                 console.log('Inloggad användare: ', user);
+                localStorage.setItem('user', JSON.stringify(user)); // spara användare i localstorage
+                navigate('/category'); // Skicka användaren till categorypage
+            
             })
             .catch(error => {
                 //hantera fel
                 console.error('Fel vid inloggning: ', error);
                 alert('Felaktig användarnamn eller lösenord');
             });
+            
     }
 
 
