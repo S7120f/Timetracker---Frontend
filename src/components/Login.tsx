@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import login from '../services/authService'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
 
@@ -47,6 +47,8 @@ function Login() {
                 />
                 <button>Logga in</button>
             </form>
+
+            <div><p>Har du inget konto? <Link to="/register">Registrera dig här</Link></p></div>
         </div>
     )
 }
