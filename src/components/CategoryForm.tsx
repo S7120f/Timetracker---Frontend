@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react"
-import createCategory, { getCategories } from '../services/categoryService'
+import createCategory, { getCategories, updateCategoryName } from '../services/categoryService'
 import type { CategoryType } from "../types/CategoryType";
 
 
+type Props = {
+    categories: CategoryType[];
+    setCategories: React.Dispatch<React.SetStateAction<CategoryType[]>>;
+  };
 
-function CategoryForm() {
+
+function CategoryForm({ categories, setCategories }: Props) {
 
     const [categoryName, setCategoryName] = useState("");
-    const [categories, setCategories] = useState<CategoryType[]>([]);
-
+    // const [categories, setCategories] = useState<CategoryType[]>([]);
+    const [categoryToEdit, setCategoryToEdit] = useState<CategoryType | null>(null);
+    const [editCategoryName, setEditCategoryName] = useState("");
 
     useEffect(() => {
         async function fetchCategories() { 
@@ -42,6 +48,28 @@ function CategoryForm() {
         setCategoryName("");
     }
 
+    const handleEditClick = (category: CategoryType) => {
+        setCategoryToEdit(category);
+        setEditCategoryName(category.name);
+    };
+
+    const handleEditSave = async () => {
+        if (!categoryToEdit) return;
+        try {
+            const updatedCategory = await updateCategoryName(categoryToEdit.id, editCategoryName);
+            setCategories(prev => 
+                prev.map(cat => 
+                    cat.id === updatedCategory.id
+                    ? updatedCategory
+                    : cat
+                )
+            );
+            setCategoryToEdit(null);
+        } catch (error: any) {
+            alert(error.message);
+        }
+    };
+
 
 
 
@@ -61,9 +89,29 @@ function CategoryForm() {
         </form>
         <ul>
             {categories.map((categoryItem, index) => (
-                <li key={index}>{categoryItem.name}</li>
+                <li key={index}>{categoryItem.name}
+                <button onClick={() => handleEditClick(categoryItem)}>Redigera</button>
+                </li> 
             ))}
         </ul>
+
+        {categoryToEdit && (
+            <div>
+                <h3>Redigera kategori</h3>
+                <input 
+                type="text"
+                value={editCategoryName}
+                onChange={e => setEditCategoryName(e.target.value)}
+                />
+            <div>
+                <button onClick={handleEditSave}>Spara</button>
+                <button onClick={() => setCategoryToEdit(null)}>Avbryt</button>
+
+            </div>
+            </div>
+        )}
+
+
         </>
     )
 

@@ -1,12 +1,34 @@
-import CategoryForm from "./CategoryForm"
-
+import CheckInOut from "./CheckInOut";
+import { getCategories } from "../services/categoryService";
+import type { CategoryType } from "../types/CategoryType";
+import CategoryForm from "./CategoryForm";
+import { useEffect, useState } from "react";
 
 function CategoryPage() {
+    const [categories, setCategories] = useState<CategoryType[]>([]);
+  
+    useEffect(() => {
+      async function fetchCategories() {
+        try {
+          const data = await getCategories();
+          setCategories(data);
+        } catch (error: any) {
+          alert(error.message);
+        }
+      }
+      fetchCategories();
+    }, []);
+
+
     return (
         <>
-        <CategoryForm />
+            <h2>Kategorier</h2>
+            <CategoryForm categories={categories} setCategories={setCategories} />
+            <h2>Tidsrapportering</h2>
+            <CheckInOut categories={categories} />
         </>
-    )
+        )
 }
+
 
 export default CategoryPage
