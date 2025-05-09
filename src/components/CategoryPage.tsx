@@ -4,6 +4,7 @@ import type { CategoryType } from "../types/CategoryType";
 import CategoryForm from "./CategoryForm";
 import { useEffect, useState } from "react";
 import WeeklySummary from "./WeeklySummary";
+import Logout from "./Logout";
 
 function CategoryPage() {
     const [categories, setCategories] = useState<CategoryType[]>([]);
@@ -23,6 +24,7 @@ function CategoryPage() {
 
     return (
         <>
+            <Logout />
             <h2>Kategorier</h2>
             <CategoryForm categories={categories} setCategories={setCategories} />
             <h2>Tidsrapportering</h2>
