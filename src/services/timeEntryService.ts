@@ -25,3 +25,12 @@ export async function checkIn(userId: number, categoryId: number) {
     if (!response.ok) throw new Error('Kunde inte hämta statistik');
     return response.json();
   }
+
+  export async function getActiveTask(userId:number) {
+    const response = await fetch(`http://localhost:8080/timeentry/activeTask/${userId}`, {
+        credentials: 'include'
+    });
+    if(!response.ok) return null;
+        return response.json();
+    
+  }

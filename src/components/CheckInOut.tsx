@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { checkIn, checkOut } from "../services/timeEntryService";
+import React, { useEffect, useState } from "react";
+import { checkIn, checkOut, getActiveTask } from "../services/timeEntryService";
 import type { CategoryType  } from "../types/CategoryType";
 
 type Props = {
@@ -15,6 +15,16 @@ function CheckInOut({ categories } : Props) {
     // Hämta userId från localStorage
     const user = JSON.parse(localStorage.getItem("user")!);
     const userId = user.id;
+
+    useEffect(() => {
+        async function fetchActiveTask() {
+            const task = await getActiveTask(userId);
+            console.log("Aktivuppgift från bakcend: " + task.category.name);
+            
+            if(task) setActiveTask(task)
+        }
+    fetchActiveTask();
+    }, [userId]);
 
     const handleCheckIn = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -63,6 +73,7 @@ function CheckInOut({ categories } : Props) {
           ) : (
             <div>
               <div>Pågående uppgift: {activeTask.category.name}</div>
+              <div>Starttid: {new Date(activeTask.startTime).toLocaleTimeString()}</div>
               <button onClick={handleCheckOut}>Avsluta</button>
             </div>
           )}
