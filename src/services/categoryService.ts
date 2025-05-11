@@ -1,10 +1,11 @@
+const API_URL = 'https://shark-app-blfsd.ondigitalocean.app';
 
 export default async function createCategory(categoryData:{ name:string }) {
 
     const user = JSON.parse(localStorage.getItem('user')!);
     const userId = user.id
 
-    const response = await fetch(`http://localhost:8080/category/createCategory/${userId}`, {
+    const response = await fetch(`${API_URL}/category/createCategory/${userId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -29,7 +30,7 @@ export async function getCategories() {
     const user = JSON.parse(localStorage.getItem('user')!);
     const userId = user.id
 
-    const response = await fetch(`http://localhost:8080/category/user/${userId}`, {
+    const response = await fetch(`${API_URL}/category/user/${userId}`, {
         credentials: 'include'
     });
 
@@ -43,7 +44,7 @@ export async function getCategories() {
 
 
 export async function updateCategoryName(categoryId: number, newName: string) {
-    const response = await fetch(`http://localhost:8080/category/editCategory/${categoryId}`, {
+    const response = await fetch(`${API_URL}/category/editCategory/${categoryId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -58,4 +59,21 @@ export async function updateCategoryName(categoryId: number, newName: string) {
 
     return response.json();
     
+}
+
+export async function editCategory(categoryId: number, categoryData: { name: string }) {
+    const response = await fetch(`${API_URL}/category/editCategory/${categoryId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(categoryData),
+        credentials: 'include'
+    });
+
+    if(!response.ok){
+        throw new Error('Kunde inte uppdatera kategori');
+    }
+
+    return response.json();
 }
