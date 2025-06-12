@@ -1,6 +1,6 @@
 // src/services/timeEntryService.ts
 
-const API_URL = 'https://shark-app-blfsd.ondigitalocean.app';
+const API_URL = 'http://localhost:8080';
 
 export async function checkIn(userId: number, categoryId: number) {
     const response = await fetch(`${API_URL}/timeentry/checkin/${userId}/${categoryId}`, {

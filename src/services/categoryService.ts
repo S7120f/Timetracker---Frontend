@@ -1,4 +1,4 @@
-const API_URL = 'https://shark-app-blfsd.ondigitalocean.app';
+const API_URL = 'http://localhost:8080';
 
 export default async function createCategory(categoryData:{ name:string }) {
 

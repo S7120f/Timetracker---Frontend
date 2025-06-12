@@ -1,10 +1,11 @@
 import  { useEffect, useState } from "react";
 import { getWeeklySummary } from "../services/timeEntryService";
 
+interface Props {
+    refresh: number;
+}
 
-
-function WeeklySummary() {
-
+function WeeklySummary({ refresh }: Props) {
     const [summary, setSummary] = useState<{ [category: string]: string }>({});
     
     //hämta statistik när komponenten laddas
@@ -22,7 +23,7 @@ function WeeklySummary() {
         }
     
         fetchSummary();
-    }, []);
+    }, [refresh]);
 
     return (
         <div>
@@ -40,7 +41,6 @@ function WeeklySummary() {
             )}
         </div>
     )
-
 }
     
 export default WeeklySummary;

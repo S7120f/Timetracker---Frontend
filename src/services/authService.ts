@@ -1,7 +1,7 @@
 import type { User, LoginRequest } from '../types/User';
 
 
-const API_URL = 'https://shark-app-blfsd.ondigitalocean.app';
+const API_URL = 'http://localhost:8080';
 
 export default async function login(loginRequest: LoginRequest): Promise<User> {
     const response = await fetch(`${API_URL}/user/login`, {

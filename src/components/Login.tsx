@@ -3,7 +3,6 @@ import login from '../services/authService'
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -30,25 +29,28 @@ function Login() {
 
 
     return (
-        <div>
-            <div>Logga in</div>
-            <form onSubmit={handleLogin}>
-                <input 
-                type="text" 
-                placeholder="Användarnamn"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                />
-                <input 
-                type="password" 
-                placeholder="Lösenord" 
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                />
-                <button>Logga in</button>
-            </form>
-
-            <div><p>Har du inget konto? <Link to="/register">Registrera dig här</Link></p></div>
+        <div className="login-page">
+            <div className="login-form-container">
+                <h2>Logga in</h2>
+                <form onSubmit={handleLogin}>
+                    <input 
+                        type="text" 
+                        placeholder="Användarnamn"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
+                    />
+                    <input 
+                        type="password" 
+                        placeholder="Lösenord" 
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
+                    <button>Logga in</button>
+                </form>
+                <div className="register-link">
+                    Har du inget konto? <Link to="/register">Registrera dig här</Link>
+                </div>
+            </div>
         </div>
     )
 }

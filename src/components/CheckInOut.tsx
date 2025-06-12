@@ -4,10 +4,11 @@ import type { CategoryType  } from "../types/CategoryType";
 
 type Props = {
     categories: CategoryType[];
+    onCheckInOut: () => void;
 };
 
 
-function CheckInOut({ categories } : Props) {
+function CheckInOut({ categories, onCheckInOut } : Props) {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [activeTask, setActiveTask] = useState<any>(null);
 
@@ -34,6 +35,7 @@ function CheckInOut({ categories } : Props) {
             if(!category) return;
             const task = await checkIn(userId, category.id);
             setActiveTask(task);
+            onCheckInOut();
         }catch (error: any) {
             alert(error.message);
         }
@@ -43,6 +45,7 @@ function CheckInOut({ categories } : Props) {
         try {
           await checkOut(userId);
           setActiveTask(null);
+          onCheckInOut();
         } catch (error: any) {
           alert(error.message);
         }

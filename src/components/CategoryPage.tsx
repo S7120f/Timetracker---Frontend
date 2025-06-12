@@ -8,6 +8,7 @@ import Logout from "./Logout";
 
 function CategoryPage() {
     const [categories, setCategories] = useState<CategoryType[]>([]);
+    const [summaryRefresh, setSummaryRefresh] = useState(0);
   
     useEffect(() => {
       async function fetchCategories() {
@@ -21,19 +22,25 @@ function CategoryPage() {
       fetchCategories();
     }, []);
 
+    const triggerSummaryRefresh = () => setSummaryRefresh(prev => prev + 1);
 
     return (
-        <>
-            <Logout />
-            <h2>Kategorier</h2>
-            <CategoryForm categories={categories} setCategories={setCategories} />
-            <h2>Tidsrapportering</h2>
-            <CheckInOut categories={categories} />
-            <h2>Statistik</h2>
-            <WeeklySummary />
-        </>
-        )
+        <div className="category-page">
+            <div className="category-section">
+                <Logout />
+                <h2>Kategorier</h2>
+                <CategoryForm categories={categories} setCategories={setCategories} />
+            </div>
+            <div className="category-section">
+                <h2>Tidsrapportering</h2>
+                <CheckInOut categories={categories} onCheckInOut={triggerSummaryRefresh} />
+            </div>
+            <div className="category-section">
+                <h2>Statistik</h2>
+                <WeeklySummary refresh={summaryRefresh} />
+            </div>
+        </div>
+    )
 }
-
 
 export default CategoryPage

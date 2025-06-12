@@ -74,45 +74,44 @@ function CategoryForm({ categories, setCategories }: Props) {
 
 
     return (
-        <>
-        <form onSubmit={handleSubmit}>
-            <label>Create Category</label> 
-            <div className="createBar">
-            <input 
-                type="text" 
-                placeholder="Enter category name..."
-                value={categoryName}
-                onChange={e => setCategoryName(e.target.value)}
-                />
-            </div>
-            <button className="createCategoryBtn">Create</button>
-        </form>
-        <ul>
-            {categories.map((categoryItem, index) => (
-                <li key={index}>{categoryItem.name}
-                <button onClick={() => handleEditClick(categoryItem)}>Redigera</button>
-                </li> 
-            ))}
-        </ul>
-
-        {categoryToEdit && (
-            <div>
-                <h3>Redigera kategori</h3>
+        <div className="category-form-container">
+            <form onSubmit={handleSubmit}>
+                <label>Create Category</label> 
+                <div className="createBar">
                 <input 
-                type="text"
-                value={editCategoryName}
-                onChange={e => setEditCategoryName(e.target.value)}
-                />
-            <div>
-                <button onClick={handleEditSave}>Spara</button>
-                <button onClick={() => setCategoryToEdit(null)}>Avbryt</button>
+                    type="text" 
+                    placeholder="Enter category name..."
+                    value={categoryName}
+                    onChange={e => setCategoryName(e.target.value)}
+                    />
+                </div>
+                <button className="createCategoryBtn">Create</button>
+            </form>
+            <ul className="category-list">
+                {categories.map((categoryItem, index) => (
+                    <li key={index}>
+                        <span>{categoryItem.name}</span>
+                        <button className="edit-btn" onClick={() => handleEditClick(categoryItem)}>Redigera</button>
+                    </li>
+                ))}
+            </ul>
 
-            </div>
-            </div>
-        )}
+            {categoryToEdit && (
+                <div>
+                    <h3>Redigera kategori</h3>
+                    <input 
+                    type="text"
+                    value={editCategoryName}
+                    onChange={e => setEditCategoryName(e.target.value)}
+                    />
+                <div>
+                    <button onClick={handleEditSave}>Spara</button>
+                    <button onClick={() => setCategoryToEdit(null)}>Avbryt</button>
 
-
-        </>
+                </div>
+                </div>
+            )}
+        </div>
     )
 
 }
